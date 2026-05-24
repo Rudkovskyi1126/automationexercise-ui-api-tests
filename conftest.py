@@ -67,7 +67,8 @@ def created_user(api_client, api_url, user_payload):
 @pytest.fixture(scope="session")
 def browser_context():
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=False)
+        headless = os.getenv("HEADLESS", "false").lower() == "true"
+        browser = p.chromium.launch(headless=headless)
         context = browser.new_context(
             viewport={"width": 1280, "height": 720},
             locale="en-US",

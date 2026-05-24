@@ -53,3 +53,4 @@ jobs:
         env:
           BASE_URL: ${{ secrets.BASE_URL || 'https://automationexercise.com' }}
           API_URL: ${{ secrets.API_URL || 'https://automationexercise.com/api' }}
+          HEADLESS: "true"
