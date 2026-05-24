@@ -1,0 +1,55 @@
+name: Automation Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  api-tests:
+    name: API Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run API tests
+        run: pytest tests/api/ -v --tb=short
+        env:
+          BASE_URL: ${{ secrets.BASE_URL || 'https://automationexercise.com' }}
+          API_URL: ${{ secrets.API_URL || 'https://automationexercise.com/api' }}
+
+  ui-tests:
+    name: UI Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Install Playwright browsers
+        run: playwright install --with-deps chromium
+
+      - name: Run UI tests (headless)
+        run: pytest tests/ui/ -v --tb=short
+        env:
+          BASE_URL: ${{ secrets.BASE_URL || 'https://automationexercise.com' }}
+          API_URL: ${{ secrets.API_URL || 'https://automationexercise.com/api' }}
