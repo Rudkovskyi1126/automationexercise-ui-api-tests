@@ -87,4 +87,5 @@ def page(browser_context, base_url):
     except:
         pass
     yield page
+    page.context.clear_cookies()
     page.close()
