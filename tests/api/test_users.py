@@ -52,5 +52,43 @@ def test_search_products(api_url):
     assert "products" in post_response.json()
     assert len(post_response.json()["products"]) > 0
 
+def test_post_products_list_not_allowed(api_url):
+    post_response = requests.post(f"{api_url}/productsList")
+    assert post_response.json()["responseCode"] == 405
+    assert post_response.json()["message"] == "This request method is not supported."
+
+
+def test_put_brands_list_not_allowed(api_url):
+    put_response = requests.put(f"{api_url}/brandsList")
+    assert put_response.json()["responseCode"] == 405
+    assert put_response.json()["message"] == "This request method is not supported."
+
+
+def test_search_product_missing_param(api_url):
+    post_response = requests.post(f"{api_url}/searchProduct")
+    assert post_response.json()["responseCode"] == 400
+    assert post_response.json()["message"] == "Bad request, search_product parameter is missing in POST request."
+
+
+def test_delete_verify_login_not_allowed(api_url):
+    delete_response = requests.delete(f"{api_url}/verifyLogin")
+    assert delete_response.json()["responseCode"] == 405
+    assert delete_response.json()["message"] == "This request method is not supported."
+
+def test_create_user_standalone(api_url, user_payload):
+    post_response = requests.post(f"{api_url}/createAccount", data=user_payload)
+    assert post_response.json()["responseCode"] == 201
+    assert post_response.json()["message"] == "User created!"
+    delete_response = requests.delete(f"{api_url}/deleteAccount", data={"email": user_payload["email"], "password": user_payload["password"]})
+    assert delete_response.json()["responseCode"] == 200
+
+def test_get_user_detail_by_email(api_url, created_user):
+    get_response = requests.get(f"{api_url}/getUserDetailByEmail", params={"email": created_user["email"]})
+    assert get_response.json()["responseCode"] == 200
+    assert get_response.json()["user"]["email"] == created_user["email"]
+
+
+
+
 
 
