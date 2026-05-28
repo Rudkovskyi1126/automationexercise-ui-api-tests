@@ -25,7 +25,8 @@ class RegisterPage:
     CREATE_ACCOUNT_BTN = "button[data-qa='create-account']"
     MSG_ACCOUNT_CREATED = "h2:has-text('Account Created!')"
     MSG_ACCOUNT_EXIST = "p:has-text('Email Address already exist!')"
-
+    MSG_ACCOUNT_DELETED = "h2:has-text('Account Deleted!')"
+    CONTINUE_BTN = "a[data-qa='continue-button']"
 
 
     def __init__(self, page: Page):
@@ -33,8 +34,6 @@ class RegisterPage:
 
     def fill_form(self, user):
         self.page.locator(self.MR_RADIO_BTN).click()
-        # self.page.locator(self.NAME_FIELD).fill(user['name'])
-        # self.page.locator(self.EMAIL_FIELD).fill(user['email'])
         self.page.locator(self.PASSWORD_FIELD).fill(user['password'])
         self.page.evaluate("window.scrollBy(0, 400)")
 
