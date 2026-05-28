@@ -68,7 +68,7 @@ def created_user(api_client, api_url, user_payload):
 def browser_context():
     with sync_playwright() as p:
         headless = os.getenv("CI", "false").lower() == "true"
-        browser = p.chromium.launch(headless=headless)
+        browser = p.chromium.launch(headless=headless, args=["--disable-features=Translate", "--disable-translate", "--lang=en-US"])
         context = browser.new_context(
             viewport={"width": 1280, "height": 720},
             locale="en-US",
@@ -81,6 +81,11 @@ def browser_context():
 @pytest.fixture
 def page(browser_context, base_url):
     page = browser_context.new_page()
+    page.route("**/*doubleclick.net*", lambda route: route.abort())
+    page.route("**/*googlesyndication.com*", lambda route: route.abort())
+    page.route("**/*adsbygoogle*", lambda route: route.abort())
+    page.route("**/*ads.google.com*", lambda route: route.abort())
+    page.route("**/*pagead2.googlesyndication.com*", lambda route: route.abort())
     page.goto(base_url)
     try:
         page.locator("button:has-text('Consent')").click(timeout=3000)
