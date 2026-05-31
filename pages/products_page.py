@@ -24,17 +24,30 @@ class ProductPage:
     SEARCH_BTN = "button[id='submit_search']"
     TITLE_SEARCH_PAGE = "h2:has-text('Searched Products')"
 
+    LEFT_SIDEBAR_CATEGORY = "div.left-sidebar h2:has-text('Category')"
+    WOMEN_CATEGORY = "a[href='#Women']"
+    WOMEN_DRESS = "#Women a[href='/category_products/1']"
+    MEN_CATEGORY = "a[href='#Men']"
+    MEN_TSHIRTS = "#Men a[href='/category_products/3']"
+    CATEGORY_TITLE = "h2.title.text-center"
+
     MESSAGE_SUCCES_ADD_TO_CART = "h4:has-text('Added!')"
     CONTINUE_SHOPPING_BTN = "button.close-modal"
     MODAL_VIEW_CART = "a:has-text('View Cart')"
     QUANTITY_INPUT = "input#quantity"
     CART_QUANTITY = "td.cart_quantity button"
 
+    #NAME_BRANDS:
+    BRAND_POLO = "a[href='/brand_products/Polo']"
+    BRAND_HM = "a[href='/brand_products/H&M']"
+
+
+
     def __init__(self, page: Page):
         self.page = page
 
     def go_to_products_page(self):
-        self.page.locator(MainPage.PRODUCTS).click()
+        self.page.locator(MainPage.PRODUCTS).first.click()
 
     def search_product(self):
         self.page.locator(MainPage.PRODUCTS).click()
