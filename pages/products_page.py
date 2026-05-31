@@ -31,17 +31,14 @@ class ProductPage:
     MEN_TSHIRTS = "#Men a[href='/category_products/3']"
     CATEGORY_TITLE = "h2.title.text-center"
 
+    BRAND_POLO = "a[href='/brand_products/Polo']"
+    BRAND_HM = "a[href='/brand_products/H&M']"
+
     MESSAGE_SUCCES_ADD_TO_CART = "h4:has-text('Added!')"
     CONTINUE_SHOPPING_BTN = "button.close-modal"
     MODAL_VIEW_CART = "a:has-text('View Cart')"
     QUANTITY_INPUT = "input#quantity"
     CART_QUANTITY = "td.cart_quantity button"
-
-    #NAME_BRANDS:
-    BRAND_POLO = "a[href='/brand_products/Polo']"
-    BRAND_HM = "a[href='/brand_products/H&M']"
-
-
 
     def __init__(self, page: Page):
         self.page = page
@@ -63,4 +60,3 @@ class ProductPage:
                 self.page.locator(self.CONTINUE_SHOPPING_BTN).click()
             else:
                 self.page.locator(self.MODAL_VIEW_CART).click()
-

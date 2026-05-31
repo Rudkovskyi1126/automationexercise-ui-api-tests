@@ -9,3 +9,4 @@ venv/
 session_notes*.md
 project_overview.md
 *.stackdump
+.claude/

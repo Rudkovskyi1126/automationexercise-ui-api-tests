@@ -1,6 +1,7 @@
 from playwright.sync_api import Page
 from pages.main_page import MainPage
 
+
 class ContactPage:
 
     URL_CONTACT = "https://automationexercise.com/contact_us"
@@ -14,7 +15,6 @@ class ContactPage:
     SUCCESS_MESSAGE = "div.status.alert-success"
     HOME_BTN = "a.btn.btn-success"
 
-
     def __init__(self, page: Page):
         self.page = page
 
@@ -27,9 +27,5 @@ class ContactPage:
         self.page.locator(self.SUBJECT_FIELD).fill('Test Subject')
         self.page.locator(self.YOUR_MESSAGE_FIELD).fill('Test message')
         self.page.locator(self.CHOOSE_FILE_BTN).set_input_files('test_file.txt')
-        self.page.on("dialog", lambda dialog:dialog.accept())
+        self.page.on("dialog", lambda dialog: dialog.accept())
         self.page.locator(self.SUBMIT_BTN).click()
-
-
-
-

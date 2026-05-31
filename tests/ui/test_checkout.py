@@ -72,5 +72,3 @@ def test_place_order_login_before_checkout(page, created_user):
     expect(page.locator(PaymentPage.SUCCESS_MSG)).to_be_visible(timeout=15000)
     page.locator(MainPage.DELETE_ACCOUNT).click()
     expect(page.locator(RegisterPage.MSG_ACCOUNT_DELETED)).to_be_visible()
-
-

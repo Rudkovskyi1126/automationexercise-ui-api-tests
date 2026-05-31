@@ -8,8 +8,6 @@ class CartPage:
     CART_DELETE_BTN = "a.cart_quantity_delete"
     TITLE_EMPTY_CART = "p:has-text('Cart is empty!')"
 
-
-
     def __init__(self, page: Page):
         self.page = page
 

@@ -4,7 +4,6 @@ from pages.cart_page import CartPage
 from pages.main_page import MainPage
 
 
-
 def test_add_products_to_cart(page):
     product_page = ProductPage(page)
     product_page.go_to_products_page()
@@ -31,4 +30,3 @@ def test_product_quantity_in_cart(page):
     page.locator(ProductPage.MESSAGE_SUCCES_ADD_TO_CART).wait_for()
     page.locator(ProductPage.MODAL_VIEW_CART).click()
     expect(page.locator(ProductPage.CART_QUANTITY)).to_have_text("4")
-

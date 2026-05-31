@@ -13,6 +13,7 @@ def test_all_products_page(page):
     expect(page.locator(ProductPage.ADD_TO_CART).first).to_be_visible()
     expect(page.locator(ProductPage.VIEW_PRODUCT_CARD).first).to_be_visible()
 
+
 def test_product_detail_page(page):
     product_page = ProductPage(page)
     product_page.go_to_products_page()
@@ -23,6 +24,7 @@ def test_product_detail_page(page):
     expect(page.locator(ProductPage.AVAILABLE_PRODUCT_CARD)).to_be_visible()
     expect(page.locator(ProductPage.CONDITION_PRODUCT_CARD)).to_be_visible()
     expect(page.locator(ProductPage.BRAND_PRODUCT_CARD)).to_be_visible()
+
 
 def test_search_product(page):
     product_page = ProductPage(page)
@@ -54,5 +56,3 @@ def test_view_brand_products(page):
     cart_page = CartPage(page)
     cart_page.go_to_cart()
     expect(page.locator(CartPage.CART_ITEM).first).to_be_visible()
-
-

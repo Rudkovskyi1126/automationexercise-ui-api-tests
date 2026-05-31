@@ -3,7 +3,6 @@ from playwright.sync_api import Page
 
 class PaymentPage:
 
-
     NAME_ON_CARD = "input[name='name_on_card']"
     CARD_NUMBER = "input[name='card_number']"
     CVC = "input[name='cvc']"
@@ -11,7 +10,6 @@ class PaymentPage:
     EXPIRY_YEAR = "input[name='expiry_year']"
     SUBMIT_BTN = "#submit"
     SUCCESS_MSG = "p:has-text('Congratulations! Your order has been confirmed!')"
-
 
     def __init__(self, page: Page):
         self.page = page

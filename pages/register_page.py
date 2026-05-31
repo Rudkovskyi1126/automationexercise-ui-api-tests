@@ -28,7 +28,6 @@ class RegisterPage:
     MSG_ACCOUNT_DELETED = "h2:has-text('Account Deleted!')"
     CONTINUE_BTN = "a[data-qa='continue-button']"
 
-
     def __init__(self, page: Page):
         self.page = page
 
@@ -36,7 +35,6 @@ class RegisterPage:
         self.page.locator(self.MR_RADIO_BTN).click()
         self.page.locator(self.PASSWORD_FIELD).fill(user['password'])
         self.page.evaluate("window.scrollBy(0, 400)")
-
         self.page.locator(self.DAY_DROPDOWN).scroll_into_view_if_needed()
         self.page.locator(self.DAY_DROPDOWN).select_option(value="1")
         self.page.locator(self.MONTH_DROPDOWN).select_option(value="5")
@@ -53,5 +51,3 @@ class RegisterPage:
         self.page.locator(self.ZIPCODE_FIELD).fill(user['zipcode'])
         self.page.locator(self.MOBILE_NUMBER_FIELD).fill(user['mobile_number'])
         self.page.locator(self.CREATE_ACCOUNT_BTN).click()
-
-
