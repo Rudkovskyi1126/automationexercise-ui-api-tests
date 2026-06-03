@@ -1,12 +1,6 @@
-import pytest
 from pages.login_page import LoginPage
 from pages.main_page import MainPage
 from pages.register_page import RegisterPage
-
-
-@pytest.fixture
-def login_page(page):
-    return LoginPage(page)
 
 
 def test_login_valid_credentials(login_page, page, created_user):
@@ -28,15 +22,15 @@ def test_logout_valid_credentials(login_page, page, created_user):
     assert not page.locator(MainPage.LOGGED_IN).is_visible()
 
 
-def test_register_new_user(login_page, page, user_payload):
+def test_register_new_user(login_page, register_page, page, user_payload):
     login_page.go_to_login_page()
     login_page.signup(email=user_payload['email'], name=user_payload['name'])
     page.wait_for_timeout(5000)
-    RegisterPage(page).fill_form(user_payload)
+    register_page.fill_form(user_payload)
     assert page.locator(RegisterPage.MSG_ACCOUNT_CREATED).is_visible()
 
 
-def test_register_existing_email(page, created_user, login_page):
+def test_register_existing_email(login_page, page, created_user):
     login_page.go_to_login_page()
     login_page.signup(email=created_user['email'], name=created_user['name'])
     assert page.locator(RegisterPage.MSG_ACCOUNT_EXIST).is_visible()

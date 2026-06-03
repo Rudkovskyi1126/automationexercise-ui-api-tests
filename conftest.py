@@ -1,9 +1,17 @@
 import os
 import uuid
 import pytest
-import requests
 from dotenv import load_dotenv
 from playwright.sync_api import sync_playwright
+from api.client import ApiClient
+from pages.login_page import LoginPage
+from pages.register_page import RegisterPage
+from pages.contact_page import ContactPage
+from pages.products_page import ProductPage
+from pages.cart_page import CartPage
+from pages.main_page import MainPage
+from pages.checkout_page import CheckoutPage
+from pages.payment_page import PaymentPage
 
 load_dotenv()
 BASE_URL = "https://automationexercise.com/"
@@ -20,14 +28,10 @@ def api_url():
 
 
 @pytest.fixture(scope="session")
-def api_client():
-    session = requests.Session()
-    session.headers.update(
-    {
-        "Content-Type": "application/x-www-form-urlencoded",
-    })
-    yield session
-    session.close()
+def api_client(api_url):
+    client = ApiClient(api_url)
+    yield client
+    client.close()
 
 
 @pytest.fixture
@@ -51,17 +55,50 @@ def user_payload():
 
 
 @pytest.fixture
-def created_user(api_client, api_url, user_payload):
-    api_client.post(f"{api_url}/createAccount", data=user_payload)
+def created_user(api_client, user_payload):
+    api_client.post("/createAccount", data=user_payload)
     yield user_payload
-    api_client.delete(
-        f"{api_url}/deleteAccount",
-        data=
-        {
-            "email": user_payload["email"],
-            "password": user_payload["password"],
-        }
-    )
+    api_client.delete("/deleteAccount", data={"email": user_payload["email"], "password": user_payload["password"]})
+
+
+@pytest.fixture
+def login_page(page):
+    return LoginPage(page)
+
+
+@pytest.fixture
+def register_page(page):
+    return RegisterPage(page)
+
+
+@pytest.fixture
+def contact_page(page):
+    return ContactPage(page)
+
+
+@pytest.fixture
+def product_page(page):
+    return ProductPage(page)
+
+
+@pytest.fixture
+def cart_page(page):
+    return CartPage(page)
+
+
+@pytest.fixture
+def main_page(page):
+    return MainPage(page)
+
+
+@pytest.fixture
+def checkout_page(page):
+    return CheckoutPage(page)
+
+
+@pytest.fixture
+def payment_page(page):
+    return PaymentPage(page)
 
 
 @pytest.fixture(scope="session")

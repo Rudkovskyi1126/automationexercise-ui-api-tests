@@ -1,3 +1,4 @@
+from pathlib import Path
 from playwright.sync_api import Page
 from pages.main_page import MainPage
 
@@ -26,6 +27,7 @@ class ContactPage:
         self.page.locator(self.EMAIL_FIELD).fill(user_payload['email'])
         self.page.locator(self.SUBJECT_FIELD).fill('Test Subject')
         self.page.locator(self.YOUR_MESSAGE_FIELD).fill('Test message')
-        self.page.locator(self.CHOOSE_FILE_BTN).set_input_files('test_file.txt')
+        file_path = Path(__file__).parent.parent / "test_file.txt"
+        self.page.locator(self.CHOOSE_FILE_BTN).set_input_files(str(file_path))
         self.page.on("dialog", lambda dialog: dialog.accept())
         self.page.locator(self.SUBMIT_BTN).click()
