@@ -24,10 +24,25 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Run API tests
-        run: pytest tests/api/ -v --tb=short
+        run: pytest tests/api/ -v --tb=short --alluredir=allure-results
         env:
           BASE_URL: ${{ secrets.BASE_URL || 'https://automationexercise.com' }}
           API_URL: ${{ secrets.API_URL || 'https://automationexercise.com/api' }}
+
+      - name: Install Allure CLI
+        if: always()
+        run: npm install -g allure-commandline
+
+      - name: Generate Allure report
+        if: always()
+        run: allure generate allure-results --clean -o allure-report
+
+      - name: Upload Allure report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report-api
+          path: allure-report
 
   ui-tests:
     name: UI Tests
@@ -49,8 +64,23 @@ jobs:
         run: playwright install --with-deps chromium
 
       - name: Run UI tests (headless)
-        run: pytest tests/ui/ -v --tb=short
+        run: pytest tests/ui/ -v --tb=short --alluredir=allure-results
         env:
           BASE_URL: ${{ secrets.BASE_URL || 'https://automationexercise.com' }}
           API_URL: ${{ secrets.API_URL || 'https://automationexercise.com/api' }}
           HEADLESS: "true"
+
+      - name: Install Allure CLI
+        if: always()
+        run: npm install -g allure-commandline
+
+      - name: Generate Allure report
+        if: always()
+        run: allure generate allure-results --clean -o allure-report
+
+      - name: Upload Allure report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report-ui
+          path: allure-report
